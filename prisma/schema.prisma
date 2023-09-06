@@ -1,0 +1,36 @@
+// This is your Prisma schema file,
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model Todo {
+  id        String    @id @default(uuid())
+  createdAt DateTime  @default(now())
+  value     String
+  isDone    Boolean   @default(false)
+  doneAt    DateTime?
+}
+
+model Yog {
+  id String @id @default(uuid())
+
+  name String
+  karma Karma[]
+}
+
+model Karma {
+  id        String    @id @default(uuid())
+  startTime DateTime  @default(now())
+  endTime   DateTime? 
+
+  yog   Yog    @relation(fields: [yogId], references: [id])
+  yogId String
+
+  @@index([yogId])
+}
