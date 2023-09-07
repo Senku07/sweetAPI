@@ -6,7 +6,7 @@ const Schema = z.object({
   value: z.string().nonempty().trim().max(255),
 });
 
-export async function POST({ request }) {
+export async function POST({ request,params }) {
   const res = Schema.safeParse(await request.json());
 
   if (!res.success) {
@@ -23,6 +23,7 @@ export async function POST({ request }) {
     const todo = await prisma.todo.create({
       data: {
         value: res.data.value,
+        userName: params.userName
       },
     });
     console.log(todo);

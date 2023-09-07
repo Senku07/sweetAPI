@@ -1,7 +1,7 @@
 import prisma from "$lib/server/index.js";
 import { json } from "@sveltejs/kit";
 
-export async function DELETE({ request, params }) {
+export async function DELETE({ params }) {
   try {
     const value = params.id;
     await prisma.todo.delete({ where: { id: value } });

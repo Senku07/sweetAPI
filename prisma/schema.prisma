@@ -9,19 +9,32 @@ datasource db {
   relationMode = "prisma"
 }
 
+model User {
+  name     String @unique
+  todo      Todo[]
+  yog       Yog[]
+}
+
 model Todo {
   id        String    @id @default(uuid())
   createdAt DateTime  @default(now())
   value     String
   isDone    Boolean   @default(false)
   doneAt    DateTime?
+  user      User  @relation(fields: [userName], references: [name])
+  userName String
+
+  @@index([userName])
 }
 
 model Yog {
   id String @id @default(uuid())
-
   name String
   karma Karma[]
+
+  user      User  @relation(fields: [userName], references: [name])
+  userName String
+  @@index([userName])
 }
 
 model Karma {

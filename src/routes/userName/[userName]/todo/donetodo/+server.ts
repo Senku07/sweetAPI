@@ -2,9 +2,9 @@ import prisma from "$lib/server/index.js";
 import { json } from "@sveltejs/kit";
 
 
-export async function GET() {
+export async function GET({params}) {
  try {
-    const todos = await prisma.todo.findMany({orderBy: { createdAt: "asc"},where:{isDone: true} });
+    const todos = await prisma.todo.findMany({orderBy: { createdAt: "asc"},where:{isDone: true, userName: params.userName } });
     return json(todos);
   } 
   catch (e) {
