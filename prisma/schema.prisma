@@ -9,10 +9,9 @@ datasource db {
   relationMode = "prisma"
 }
 
-model User {
-  name     String @unique
-  todo      Todo[]
-  yog       Yog[]
+enum User{
+  Rajat
+  Bhojraj 
 }
 
 model Todo {
@@ -21,8 +20,7 @@ model Todo {
   value     String
   isDone    Boolean   @default(false)
   doneAt    DateTime?
-  user      User  @relation(fields: [userName], references: [name])
-  userName String
+  userName  User @default(Bhojraj)  
 
   @@index([userName])
 }
@@ -32,8 +30,7 @@ model Yog {
   name String
   karma Karma[]
 
-  user      User  @relation(fields: [userName], references: [name])
-  userName String
+  userName User @default(Bhojraj) 
   @@index([userName])
 }
 
